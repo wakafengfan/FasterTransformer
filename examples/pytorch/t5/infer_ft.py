@@ -307,7 +307,7 @@ def main():
         output_lines = [tokenizer.decode([int(idx) for idx in output[0][beam_idx][:ft_output_len[0][beam_idx]]]) for beam_idx in range(args.beam_width)]
         output_lines = ["".join(output_line) for output_line in output_lines]
 
-        cum_log_probs = [str(cum_log_probs[0][beam_idx]) for beam_idx in range(args.beam_idx)]
+        cum_log_probs = [str(cum_log_probs[0][beam_idx]) for beam_idx in range(args.beam_width)]
 
         pred_log.append({
             "msg": texts[0],
