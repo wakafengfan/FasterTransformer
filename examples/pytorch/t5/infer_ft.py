@@ -317,10 +317,10 @@ def main():
             print(cum_log_probs)
 
         pred_log.append({
-            "msg": texts[0],
-            "true": texts[1],
-            "pred": texts[2],
-            "score": texts[3],
+            "msg": texts[0][0],
+            "true": texts[0][1],
+            "pred": texts[0][2],
+            "score": texts[0][3],
             "ft_res": {
                 "preds": output_lines,
                 "scores": cum_log_probs
