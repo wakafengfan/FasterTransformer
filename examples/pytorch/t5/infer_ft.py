@@ -282,7 +282,7 @@ def main():
     dev_dataloader = DataLoader(
         dev_dataset,
         sampler=dev_sampler,
-        batch_size=16,
+        batch_size=1,
         collate_fn=dev_dataset.collate_fn,
         drop_last=True,
         pin_memory=True
