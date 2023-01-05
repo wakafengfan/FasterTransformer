@@ -481,7 +481,7 @@ class FTT5(nn.Module):
         if is_return_output_log_probs:
             ft_output_log_probs = results.pop(0)
         if is_return_cum_log_probs:
-            ft_cum_log_probs = results.pop(0)
+            ft_cum_log_probs = results.pop(0).reshape([-1, beam_size])
             return ft_decoding_outputs.cpu().numpy(), ft_decoding_seq_lens.cpu().numpy(), ft_cum_log_probs.cpu().numpy()
         if is_return_cross_attentions:
             ft_cross_attentions = results.pop(0)
