@@ -80,7 +80,7 @@ class WordsGenDataset(Dataset):
         batch_encoder_ids = []
         batch_texts = []
         for context, t_ans, p_ans, s in batch_samples:
-            c_token_ids, _ = self.tokenizer.encode('context: ' + context, maxlen=self.args.max_passage_len-20)
+            c_token_ids, _ = self.tokenizer.encode('context: ' + context, maxlen=self.args.max_seq_len-20)
             q_token_ids, _ = self.tokenizer.encode('question: 这句的关键词是什么?')
             # a_token_ids, _ = self.tokenizer.encode(ans, maxlen=self.args.max_question_len)
 
