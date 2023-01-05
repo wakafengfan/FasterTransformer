@@ -290,7 +290,7 @@ def main():
 
     pred_log = []
     em, em2, total = 0, 0, 0
-    for batch in dev_dataloader:
+    for k, batch in enumerate(dev_dataloader):
         query_token_ids, query_token_masks, texts = batch
         with torch.no_grad():
             output, ft_output_len, cum_log_probs = ft_t5((query_token_ids, query_token_masks),
@@ -308,6 +308,10 @@ def main():
         output_lines = ["".join(output_line) for output_line in output_lines]
 
         cum_log_probs = [str(cum_log_probs[0][beam_idx]) for beam_idx in range(args.beam_width)]
+
+        if k < 3:
+            print(output_lines)
+            print(cum_log_probs)
 
         pred_log.append({
             "msg": texts[0],
