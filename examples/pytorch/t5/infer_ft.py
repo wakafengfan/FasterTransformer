@@ -7,7 +7,6 @@ import os
 import sys
 import torch
 import torch.distributed as dist
-from datasets import load_dataset, load_metric
 # dir_path = os.path.dirname(os.path.realpath(__file__))
 # sys.path.append(dir_path + "/../../../3rdparty/transformers/src/")
 
