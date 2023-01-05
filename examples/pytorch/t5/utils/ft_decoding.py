@@ -482,7 +482,7 @@ class FTT5(nn.Module):
             ft_output_log_probs = results.pop(0)
         if is_return_cum_log_probs:
             ft_cum_log_probs = results.pop(0)
-            return ft_decoding_outputs.cpu().numpy(), ft_decoding_seq_lens.cpu().numpy(), ft_cum_log_probs.cpu().numpy
+            return ft_decoding_outputs.cpu().numpy(), ft_decoding_seq_lens.cpu().numpy(), ft_cum_log_probs.cpu().numpy()
         if is_return_cross_attentions:
             ft_cross_attentions = results.pop(0)
             return ft_decoding_outputs.cpu().numpy(), ft_decoding_seq_lens.cpu().numpy(), ft_cross_attentions.cpu().numpy()
