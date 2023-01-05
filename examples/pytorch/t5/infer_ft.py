@@ -282,7 +282,7 @@ def main():
     dev_dataloader = DataLoader(
         dev_dataset,
         sampler=dev_sampler,
-        batch_size=1,
+        batch_size=16,
         collate_fn=dev_dataset.collate_fn,
         drop_last=True,
         pin_memory=True
@@ -291,9 +291,9 @@ def main():
     pred_log = []
     em, em2, total = 0, 0, 0
     for k, batch in enumerate(dev_dataloader):
-        query_token_ids, query_token_masks, texts = batch
+        query_token_ids, query_token_masks, b_texts = batch
         with torch.no_grad():
-            output, ft_output_len, cum_log_probs = ft_t5((query_token_ids, query_token_masks),
+            b_output, b_ft_output_len, b_cum_log_probs = ft_t5((query_token_ids, query_token_masks),
                                           None,
                                           args.beam_width,
                                           args.max_seq_len,
@@ -305,27 +305,28 @@ def main():
                                           is_return_cum_log_probs=True)
         if k < 3:
             print('====== pre ======')
-            print(cum_log_probs)
+            print(b_cum_log_probs)
+        
+        for output, ft_output_len, cum_log_probs, texts in zip(b_output, b_ft_output_len, b_cum_log_probs, b_texts):                
+            output_lines = [tokenizer.decode([int(idx) for idx in output[beam_idx][:ft_output_len[beam_idx]]]) for beam_idx in range(args.beam_width)]
+            output_lines = ["".join(output_line) for output_line in output_lines]
+            cum_log_probs = [str(cum_log_probs[beam_idx]) for beam_idx in range(args.beam_width)]
 
-        output_lines = [tokenizer.decode([int(idx) for idx in output[0][beam_idx][:ft_output_len[0][beam_idx]]]) for beam_idx in range(args.beam_width)]
-        output_lines = ["".join(output_line) for output_line in output_lines]
-        cum_log_probs = [str(cum_log_probs[0][beam_idx]) for beam_idx in range(args.beam_width)]
+            if k < 3:
+                print('====== post ======')
+                print(output_lines)
+                print(cum_log_probs)
 
-        if k < 3:
-            print('====== post ======')
-            print(output_lines)
-            print(cum_log_probs)
-
-        pred_log.append({
-            "msg": texts[0][0],
-            "true": texts[0][1],
-            "pred": texts[0][2],
-            "score": texts[0][3],
-            "ft_res": {
-                "preds": output_lines,
-                "scores": cum_log_probs
-            }
-        })
+            pred_log.append({
+                "msg": texts[0],
+                "true": texts[1],
+                "pred": texts[2],
+                "score": texts[3],
+                "ft_res": {
+                    "preds": output_lines,
+                    "scores": cum_log_probs
+                }
+            })
 
     json.dump(pred_log, Path("res.json").open('w'), ensure_ascii=False, indent=2)
 
