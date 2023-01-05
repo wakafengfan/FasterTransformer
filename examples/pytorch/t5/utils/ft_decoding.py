@@ -450,12 +450,13 @@ class FTT5(nn.Module):
                 temperature=1.0, len_penalty=0.0, repetition_penalty=1.0, random_seed=0,
                 is_return_output_log_probs=False, is_return_cum_log_probs=False, is_return_cross_attentions=False,
                 bad_words_list=None, stop_words_list=None):
-        input_ids = input_token.input_ids.to("cuda").type(torch.int32)
+        input_ids = input_token[0].to("cuda").type(torch.int32)
         mem_seq_len = 0
-        if hasattr(input_token, "attention_mask"):
-            mem_seq_len = torch.sum(input_token.attention_mask, dim=1).type(torch.int32).to("cuda")
-        else:
-            mem_seq_len = input_token.seq_len.type(torch.int32).to("cuda")
+        mem_seq_len = torch.sum(input_token[1], dim=1).type(torch.int32).to("cuda")
+        # if hasattr(input_token, "attention_mask"):
+            # mem_seq_len = torch.sum(input_token.attention_mask, dim=1).type(torch.int32).to("cuda")
+        # else:
+            # mem_seq_len = input_token.seq_len.type(torch.int32).to("cuda")
 
         ft_encoder_outputs = self.encoder.forward(input_ids, mem_seq_len, inputs_embeds)
         results = self.decoding.forward(beam_size,  # optional, can be None
@@ -481,6 +482,7 @@ class FTT5(nn.Module):
             ft_output_log_probs = results.pop(0)
         if is_return_cum_log_probs:
             ft_cum_log_probs = results.pop(0)
+            return ft_decoding_outputs.cpu().numpy(), ft_decoding_seq_lens.cpu().numpy(), ft_cum_log_probs.cpu().numpy
         if is_return_cross_attentions:
             ft_cross_attentions = results.pop(0)
             return ft_decoding_outputs.cpu().numpy(), ft_decoding_seq_lens.cpu().numpy(), ft_cross_attentions.cpu().numpy()
