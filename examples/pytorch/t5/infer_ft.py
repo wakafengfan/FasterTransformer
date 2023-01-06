@@ -2,6 +2,7 @@ from __future__ import print_function
 import argparse
 import json
 from pathlib import Path
+import time
 import numpy as np
 import os
 import sys
@@ -289,7 +290,7 @@ def main():
     )
 
     pred_log = []
-    em, em2, total = 0, 0, 0
+    st_time = time.time()
     for k, batch in enumerate(dev_dataloader):
         query_token_ids, query_token_masks, b_texts = batch
         with torch.no_grad():
@@ -329,7 +330,7 @@ def main():
             })
 
     json.dump(pred_log, Path("res.json").open('w'), ensure_ascii=False, indent=2)
-    print('done')
+    print(f'done {time.time() - st_time}')
 
 
 if __name__ == '__main__':

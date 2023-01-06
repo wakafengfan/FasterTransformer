@@ -1,5 +1,6 @@
 import logging
 import os
+import sys
 from botocore.config import Config
 import boto3
 
@@ -116,7 +117,10 @@ def download_other():
 
 
 if __name__ == "__main__":
-    download_other()
+    if sys.argv[1] == 1:
+        download_other()
+    else:
+        upload_other()
     
 
 
