@@ -135,7 +135,7 @@ def main():
     parser.add_argument("--beam_width", type=int, default=1, help="beam width for beam search")
 
     args = parser.parse_args()
-    np.random.seed(0) # rouge score use sampling to compute the score
+    np.random.seed(42) # rouge score use sampling to compute the score
 
     if dist.is_mpi_available():
         try:
