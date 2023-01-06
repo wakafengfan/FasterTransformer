@@ -71,8 +71,8 @@ def data_transfer(file_names, local_dir, remote_dir, trans_type):
     
     elif trans_type == "upload":
         for f_name in file_names:
-            remote_path = f"{remote_dir}/{f_name[1]}"
-            local_path = f"{local_dir}/{f_name[0]}"
+            remote_path = f"{remote_dir}/{f_name}"
+            local_path = f"{local_dir}/{f_name}"
 
             logger.info(f_name)
 
