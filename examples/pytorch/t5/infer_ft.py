@@ -131,7 +131,7 @@ def main():
                         help='Threshold of FT rougeLsum score')
     parser.add_argument("--top_k", type=int, default=1, help="top k for sampling")
     parser.add_argument("--top_p", type=float, default=0.0, help="top p for sampling")
-    parser.add_argument("--beam_width", type=int, default=3, help="beam width for beam search")
+    parser.add_argument("--beam_width", type=int, default=1, help="beam width for beam search")
 
     args = parser.parse_args()
     np.random.seed(0) # rouge score use sampling to compute the score

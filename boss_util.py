@@ -110,28 +110,13 @@ def upload_other():
 
 def download_other():
     file_names = [
-        # "config.json",
-        # "pytorch_model.bin",
-        # "sentencepiece_cn.model"
-        # "words_pred_log_69.json"
-        "infer_ft.py",
-        "bojone_tokenizers.py"
+        "res.json"
     ]
     data_transfer(file_names=file_names, local_dir=".", remote_dir="FT", trans_type="download")
-    
-    file_names = [
-        "config.json",
-        "pytorch_model.bin",
-        "sentencepiece_cn.model",
-        "words_pred_log_69.json"
-        # "infer_ft.py",
-        # "bojone_tokenizers.py"
-    ]
-    data_transfer(file_names=file_names, local_dir=".", remote_dir="FT/models", trans_type="download")
 
 
 if __name__ == "__main__":
-    upload_other()
+    download_other()
     
 
 
