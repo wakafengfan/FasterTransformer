@@ -101,8 +101,9 @@ def upload_other():
         # "pytorch_model.bin",
         # "sentencepiece_cn.model"
         # "words_pred_log_69.json"
-        "infer_ft.py",
-        "bojone_tokenizers.py"
+        # "infer_ft.py",
+        # "bojone_tokenizers.py"
+        "boss_util.py"
     ]
     data_transfer(file_names=file_names, local_dir="/workspace/FasterTransformer/examples/pytorch/t5", remote_dir="FT", trans_type="upload")
 
@@ -130,7 +131,7 @@ def download_other():
 
 
 if __name__ == "__main__":
-    download_other()
+    upload_other()
     
 
 
