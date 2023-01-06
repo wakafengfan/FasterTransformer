@@ -329,6 +329,7 @@ def main():
             })
 
     json.dump(pred_log, Path("res.json").open('w'), ensure_ascii=False, indent=2)
+    print('done')
 
 
 if __name__ == '__main__':
