@@ -1,3 +1,4 @@
+import argparse
 import logging
 import os
 import sys
@@ -117,7 +118,11 @@ def download_other():
 
 
 if __name__ == "__main__":
-    if sys.argv[1] == 1:
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--type', type=str, required=True)
+    args = parser.parse_args()
+
+    if args.type == 'download':
         download_other()
     else:
         upload_other()
