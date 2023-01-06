@@ -103,9 +103,9 @@ def upload_other():
         # "words_pred_log_69.json"
         # "infer_ft.py",
         # "bojone_tokenizers.py"
-        "boss_util.py"
+        "res.json"
     ]
-    data_transfer(file_names=file_names, local_dir="/workspace/v2/FasterTransformer/examples/pytorch/t5", remote_dir="FT", trans_type="upload")
+    data_transfer(file_names=file_names, local_dir="/workspace/v2/FasterTransformer", remote_dir="FT", trans_type="upload")
 
 
 def download_other():
