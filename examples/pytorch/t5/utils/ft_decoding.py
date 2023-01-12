@@ -479,12 +479,13 @@ class FTT5(nn.Module):
         ft_decoding_outputs = results.pop(0).reshape([-1, beam_size, max_seq_len])
         ft_decoding_seq_lens = results.pop(0).reshape([-1, beam_size])
         if is_return_output_log_probs:
-            ft_output_log_probs = results.pop(0)
+            ft_output_log_probs = results.pop(0).reshape([ft_decoding_outputs.shape[0], beam_size, -1])
         if is_return_cum_log_probs:
             ft_cum_log_probs = results.pop(0).reshape([-1, beam_size])
-            return ft_decoding_outputs.cpu().numpy(), ft_decoding_seq_lens.cpu().numpy(), ft_cum_log_probs.cpu().numpy()
         if is_return_cross_attentions:
             ft_cross_attentions = results.pop(0)
             return ft_decoding_outputs.cpu().numpy(), ft_decoding_seq_lens.cpu().numpy(), ft_cross_attentions.cpu().numpy()
 
-        return ft_decoding_outputs.cpu().numpy(), ft_decoding_seq_lens.cpu().numpy()
+        # return ft_decoding_outputs.cpu().numpy(), ft_decoding_seq_lens.cpu().numpy()
+        return ft_decoding_outputs.cpu().numpy(), ft_decoding_seq_lens.cpu().numpy(), ft_output_log_probs.cpu().numpy(), ft_cum_log_probs.cpu().numpy()
+

@@ -294,15 +294,16 @@ def main():
     for k, batch in enumerate(dev_dataloader):
         query_token_ids, query_token_masks, b_texts = batch
         with torch.no_grad():
-            b_output, b_ft_output_len, b_cum_log_probs = ft_t5((query_token_ids, query_token_masks),
-                                          None,
-                                          args.beam_width,
-                                          args.max_seq_len,
-                                          top_k=None,
+            b_output, b_ft_output_len, _, b_cum_log_probs = ft_t5(
+                                          input_token =(query_token_ids, query_token_masks),
+                                          inputs_embeds=None,
+                                          beam_size=args.beam_width,
+                                          max_seq_len=args.max_seq_len,
+                                          top_k=1,
                                           top_p=None,
                                           beam_search_diversity_rate=0.0,
-                                          is_return_output_log_probs=False,
                                           len_penalty=1.0,
+                                          is_return_output_log_probs=True,
                                           is_return_cum_log_probs=True)
         if k < 3:
             print('====== pre ======')
