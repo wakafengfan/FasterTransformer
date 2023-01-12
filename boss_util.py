@@ -121,10 +121,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--type', type=str, required=True)
     args = parser.parse_args()
+    print(args.type)
 
     if args.type == 'download':
         download_other()
-    else:
+    elif args.type == 'upload':
         upload_other()
     
 
