@@ -300,7 +300,7 @@ def main():
                                           beam_size=args.beam_width,
                                           max_seq_len=args.max_seq_len,
                                           top_k=1,
-                                          top_p=None,
+                                          top_p=0.0,
                                           beam_search_diversity_rate=0.0,
                                           len_penalty=1.0,
                                           is_return_output_log_probs=True,
